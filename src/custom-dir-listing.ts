@@ -5,6 +5,7 @@ import { DirListing } from '@jupyterlab/filebrowser';
 import { PathExt } from '@jupyterlab/coreutils';
 import { renameFile, isValidFileName } from '@jupyterlab/docmanager';
 import { showErrorMessage } from '@jupyterlab/apputils';
+
 import { Contents } from '@jupyterlab/services';
 
 /**
@@ -17,7 +18,7 @@ export class CustomDirListing extends DirListing {
 
   private async _doTreeRename(): Promise<string> {
     (this as any)._inRename = true;
-    const items = (this as any)._sortedItems as Contents.IModel[]; // Ensure correct type
+    const items = (this as any)._sortedItems as Contents.IModel[];
     const path = Object.keys(this.selection)[0];
     const index = ArrayExt.findFirstIndex(
       items,
@@ -88,16 +89,10 @@ export class CustomDirListing extends DirListing {
       (this as any)._inRename = false;
       return newName;
     } catch (error) {
-      const errorMessage =
-        typeof error === 'string'
-          ? error
-          : error instanceof Error
-            ? error.message
-            : 'An unknown error occurred';
       if (error !== 'File not renamed') {
         await showErrorMessage(
           (this as any)._trans._p('showErrorMessage', 'Rename Error'),
-          errorMessage
+          'An unknown error occurred'
         );
       }
       (this as any)._inRename = false;

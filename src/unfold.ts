@@ -20,6 +20,8 @@ import { DocumentRegistry } from '@jupyterlab/docregistry';
 
 import { renameFile } from '@jupyterlab/docmanager';
 
+import { CustomDirListing } from './custom-dir-listing';
+
 import { PathExt, IChangedArgs } from '@jupyterlab/coreutils';
 
 import {
@@ -192,7 +194,7 @@ export class FileTreeRenderer extends DirListing.Renderer {
  * A widget which hosts a filetree.
  */
 // @ts-ignore: _onPathChanged is private upstream, need to change this
-export class DirTreeListing extends DirListing {
+export class DirTreeListing extends CustomDirListing {
   constructor(options: DirTreeListing.IOptions) {
     super({ ...options, renderer: new FileTreeRenderer(options.model) });
   }
